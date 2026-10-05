@@ -1,0 +1,226 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: transparent;
+}
+
+html, body {
+    background: transparent !important;
+    background-color: transparent !important;
+    overflow: hidden;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+.hidden {
+    display: none !important;
+}
+
+#noise-container {
+    position: fixed;
+    z-index: 9999;
+    pointer-events: none;
+    background: none !important;
+    background-color: transparent !important;
+}
+
+/* Position classes */
+#noise-container.top-left {
+    top: 20px;
+    left: 20px;
+}
+
+#noise-container.top-right {
+    top: 20px;
+    right: 20px;
+}
+
+#noise-container.bottom-left {
+    bottom: 20px;
+    left: 20px;
+}
+
+#noise-container.bottom-right {
+    bottom: 150px;
+    right: 20px;
+}
+
+.noise-ui {
+    background: linear-gradient(135deg, rgba(15, 15, 25, 0.95) 0%, rgba(25, 25, 40, 0.9) 100%);
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    padding: 15px 25px;
+    min-width: 320px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+.noise-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.noise-icon {
+    font-size: 20px;
+    transition: all 0.3s ease;
+}
+
+.noise-icon.warning {
+    animation: pulse 0.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.1); }
+}
+
+.noise-title {
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.noise-bar-container {
+    position: relative;
+    height: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.noise-bar {
+    height: 100%;
+    width: 0%;
+    background: #00c853;
+    border-radius: 10px;
+    transition: width 0.15s ease-out, background-color 0.3s ease;
+    position: relative;
+}
+
+.noise-bar::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.3) 0%, transparent 100%);
+    border-radius: 10px 10px 0 0;
+}
+
+.noise-threshold {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: rgba(255, 255, 255, 0.8);
+    left: 80%;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+}
+
+.noise-threshold::before {
+    content: '!';
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #ff9800;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.noise-status {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.status-text {
+    color: #4caf50;
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.3s ease;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.status-text.warning {
+    color: #ff9800;
+    animation: textPulse 0.5s ease-in-out infinite;
+}
+
+.status-text.danger {
+    color: #f44336;
+    animation: textPulse 0.3s ease-in-out infinite;
+}
+
+@keyframes textPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.crouch-hint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hint-key {
+    background: linear-gradient(180deg, #3a3a4a 0%, #2a2a3a 100%);
+    color: #ffffff;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.hint-key.active {
+    background: linear-gradient(180deg, #4caf50 0%, #388e3c 100%);
+    border-color: #4caf50;
+    box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+}
+
+.hint-text {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 11px;
+}
+
+/* Warning state - flash the border */
+.noise-ui.warning {
+    animation: borderFlash 0.5s ease-in-out infinite;
+}
+
+@keyframes borderFlash {
+    0%, 100% { border-color: rgba(255, 152, 0, 0.5); }
+    50% { border-color: rgba(255, 152, 0, 1); }
+}
+
+.noise-ui.danger {
+    animation: dangerFlash 0.3s ease-in-out infinite;
+}
+
+@keyframes dangerFlash {
+    0%, 100% { 
+        border-color: rgba(244, 67, 54, 0.5);
+        box-shadow: 0 8px 32px rgba(244, 67, 54, 0.3);
+    }
+    50% { 
+        border-color: rgba(244, 67, 54, 1);
+        box-shadow: 0 8px 32px rgba(244, 67, 54, 0.6);
+    }
+}
